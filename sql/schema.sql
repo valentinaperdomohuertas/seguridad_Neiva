@@ -1,0 +1,26 @@
+CREATE DATABASE IF NOT EXISTS seguridad_neiva;
+USE seguridad_neiva;
+
+CREATE TABLE IF NOT EXISTS usuarios (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  nombre VARCHAR(100) NOT NULL,
+  apellido VARCHAR(100) NOT NULL,
+  cedula VARCHAR(20) NOT NULL,
+  correo VARCHAR(150) NOT NULL UNIQUE,
+  contrasena VARCHAR(255) NOT NULL,
+  fecha_nacimiento DATE,
+  creado_en DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS reportes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_usuario INT NOT NULL,
+  tipo VARCHAR(50) NOT NULL,
+  ubicacion VARCHAR(255) NOT NULL,
+  descripcion TEXT NOT NULL,
+  estado VARCHAR(20) DEFAULT 'Pendiente',
+  lat DECIMAL(10,7),
+  lng DECIMAL(10,7),
+  fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_usuario) REFERENCES usuarios(id) ON DELETE CASCADE
+);

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar sesión - Seguridad Neiva</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="login.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+</head>
+<body>
+<div class="login-wrapper">
+    <div class="login-box">
+        <!-- LOGIN -->
+        <div id="seccion-login">
+            <h2><i class="fi fi-rr-user"></i> Inicio de sesión</h2>
+            <input id="correo" type="email" placeholder="Correo">
+            <input id="clave" type="password" placeholder="Contraseña">
+            <button onclick="iniciarSesion()"><i class="fi fi-rr-sign-in"></i> Ingresar</button>
+            <p class="link-registro">
+                ¿No tienes cuenta?
+                <a href="#" onclick="mostrarRegistro(); return false;">Regístrate aquí</a>
+            </p>
+        </div>
+
+        <!-- REGISTRO -->
+        <div id="seccion-registro" class="oculto">
+            <h2><i class="fi fi-rr-user-add"></i> Registro de usuario</h2>
+            <input id="nombre" type="text" placeholder="Nombre">
+            <input id="apellido" type="text" placeholder="Apellido">
+            <input id="cedula" type="text" placeholder="Cédula">
+            <input id="fecha" type="date">
+            <input id="reg-correo" type="email" placeholder="Correo">
+            <input id="reg-clave" type="password" placeholder="Contraseña">
+            <button onclick="registrarUsuario()"><i class="fi fi-rr-user-add"></i> Registrarse</button>
+            <p class="link-registro">
+                <a href="#" onclick="mostrarLogin(); return false;">Volver a inicio de sesión</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script src="auth.js"></script>
+</body>
+</html>
