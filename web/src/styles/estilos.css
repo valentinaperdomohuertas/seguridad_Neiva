@@ -1,0 +1,185 @@
+:root {
+  --azul-marino: #1f3864;
+  --azul-acento: #2e74b5;
+  --gris-claro: #f2f2f2;
+  --gris-oscuro: #595959;
+  --verde: #2e8b57;
+  --rojo: #c0392b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #fafafa;
+  color: #222;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--azul-marino);
+  color: white;
+  padding: 16px 32px;
+}
+
+.navbar__marca {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.navbar__enlaces {
+  display: flex;
+  gap: 24px;
+}
+
+.nav-link {
+  color: #d6e8ff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-link--activo {
+  color: white;
+  border-bottom: 2px solid white;
+  padding-bottom: 4px;
+}
+
+.app__contenido {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+.pagina-inicio h1,
+.pagina-incidentes h1,
+.pagina-reportar h1 {
+  color: var(--azul-marino);
+}
+
+.pagina-inicio__acciones {
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.boton {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.boton--primario {
+  background-color: var(--azul-acento);
+  color: white;
+}
+
+.boton--secundario {
+  background-color: white;
+  color: var(--azul-acento);
+  border: 1px solid var(--azul-acento);
+}
+
+.boton--peligro {
+  background-color: var(--rojo);
+  color: white;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 480px;
+  background: white;
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.formulario__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.formulario__campo label {
+  font-weight: 600;
+  color: var(--gris-oscuro);
+}
+
+.formulario__campo input,
+.formulario__campo select,
+.formulario__campo textarea {
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.formulario__mensaje--error {
+  color: var(--rojo);
+  font-weight: 600;
+}
+
+.formulario__mensaje--exito {
+  color: var(--verde);
+  font-weight: 600;
+}
+
+.lista-incidentes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.tarjeta-incidente {
+  background: white;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tarjeta-incidente__encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tarjeta-incidente__estado {
+  color: white;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.tarjeta-incidente__descripcion {
+  color: #444;
+}
+
+.tarjeta-incidente__ubicacion {
+  color: var(--gris-oscuro);
+  font-size: 0.9rem;
+}
+
+.tarjeta-incidente__acciones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  gap: 10px;
+}
+
+.estado-carga,
+.estado-error {
+  text-align: center;
+  color: var(--gris-oscuro);
+}
