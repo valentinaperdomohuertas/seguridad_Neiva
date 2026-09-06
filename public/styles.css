@@ -1,0 +1,21 @@
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: #f4f6f8;
+    color: #222;
+}
+
+.oculto {
+    display: none;
+}
+
+/* Iconos Flaticon - base compartida */
+.fi {
+    display: inline-flex;
+    vertical-align: middle;
+    line-height: 1;
+}

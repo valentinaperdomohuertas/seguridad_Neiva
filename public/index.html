@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel de Seguridad - Neiva</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder@2.4.0/dist/Control.Geocoder.css"/>
+</head>
+<body>
+<div class="container">
+    <!-- MENÚ -->
+    <aside class="sidebar">
+        <h2><i class="fi fi-rr-shield"></i> Seguridad Neiva</h2>
+        <ul id="menu">
+            <li class="active" data-vista="inicio" onclick="irA('inicio')"><i class="fi fi-rr-home"></i> Inicio</li>
+            <li data-vista="reportar" onclick="irA('reportar')"><i class="fi fi-rr-document-signed"></i> Reportar incidente</li>
+            <li data-vista="mapa" onclick="irA('mapa')"><i class="fi fi-rr-map"></i> Mapa</li>
+            <li data-vista="chat" onclick="irA('chat')"><i class="fi fi-rr-comment"></i> Chat</li>
+            <li data-vista="notificaciones" onclick="irA('notificaciones')"><i class="fi fi-rr-bell"></i> Notificaciones</li>
+            <li data-vista="perfil" onclick="irA('perfil')"><i class="fi fi-rr-user"></i> Perfil</li>
+        </ul>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="main">
+        <h1><i class="fi fi-rr-shield"></i> Panel de Seguridad</h1>
+
+        <!-- PANEL PRINCIPAL -->
+        <div id="panel-principal">
+
+            <!-- VISTA: INICIO -->
+            <section class="vista" id="vista-inicio">
+                <div class="cards">
+                    <div class="card"><span id="card-total">0</span><br><span><i class="fi fi-rr-folder"></i> Reportes</span></div>
+                    <div class="card"><span id="card-proceso">0</span><br><span><i class="fi fi-rr-settings"></i> En proceso</span></div>
+                    <div class="card"><span id="card-resueltos">0</span><br><span><i class="fi fi-rr-check-circle"></i> Resueltos</span></div>
+                </div>
+                <div class="content">
+                    <div class="mapa">
+                        <h3><i class="fi fi-rr-map-marker"></i> Últimos puntos reportados</h3>
+                        <div class="map-box">
+                            <i class="fi fi-rr-map-marker"></i> Centro de Neiva<br><br>
+                            <i class="fi fi-rr-map-marker"></i> Avenida Circunvalar<br><br>
+                            <i class="fi fi-rr-map-marker"></i> Parque Santander
+                        </div>
+                    </div>
+                    <div class="reportes">
+                        <h3><i class="fi fi-rr-comment"></i> Chat en tiempo real</h3>
+                        <p><strong>Usuario:</strong> Necesito ayuda.</p>
+                        <p><strong>Soporte:</strong> La patrulla va en camino.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VISTA: REPORTAR INCIDENTE (CRUD completo) -->
+            <section class="vista oculto" id="vista-reportar">
+                <div class="formulario">
+                    <h2 id="titulo-form-reporte"><i class="fi fi-rr-document-signed"></i> Reportar incidente</h2>
+                    <input type="hidden" id="reporte-id">
+
+                    <select id="incidente">
+                        <option value="">-- Selecciona el tipo de incidente --</option>
+                        <option value="Robo">Robo</option>
+                        <option value="Hurto">Hurto</option>
+                        <option value="Vandalismo">Vandalismo</option>
+                        <option value="Accidente de tránsito">Accidente de tránsito</option>
+                        <option value="Disturbio">Disturbio</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+
+                    <input id="ubicacion" type="text" placeholder="Ej: Carrera 5 #10-20, Centro de Neiva">
+                    <textarea id="descripcion" placeholder="Descripción (mínimo 10 caracteres)"></textarea>
+
+                    <button id="btn-guardar-reporte" onclick="guardarReporte()">Enviar reporte</button>
+                    <button id="btn-cancelar-edicion" class="oculto btn-secundario" onclick="cancelarEdicion()">Cancelar edición</button>
+                </div>
+
+                <div class="historial">
+                    <h2>Reportes registrados (<span id="conteo-reportes">0</span>)</h2>
+                    <div id="lista-reportes"></div>
+                </div>
+            </section>
+
+            <!-- VISTA: MAPA -->
+            <section class="vista oculto" id="vista-mapa">
+                <div class="mapa mapa-full">
+                    <h3><i class="fi fi-rr-map"></i> Mapa de incidentes - Neiva</h3>
+                    <div id="map"></div>
+                </div>
+            </section>
+
+            <!-- VISTA: CHAT -->
+            <section class="vista oculto" id="vista-chat">
+                <div class="reportes reportes-full">
+                    <h3><i class="fi fi-rr-comment"></i> Chat en tiempo real con soporte</h3>
+                    <div id="mensajes-chat" class="mensajes-chat">
+                        <p><strong>Usuario:</strong> Necesito ayuda.</p>
+                        <p><strong>Soporte:</strong> La patrulla va en camino.</p>
+                    </div>
+                    <div class="chat-input">
+                        <input id="mensaje-nuevo" type="text" placeholder="Escribe un mensaje...">
+                        <button onclick="enviarMensaje()"><i class="fi fi-rr-paper-plane"></i> Enviar</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VISTA: NOTIFICACIONES -->
+            <section class="vista oculto" id="vista-notificaciones">
+                <div class="historial">
+                    <h2><i class="fi fi-rr-bell"></i> Notificaciones</h2>
+                    <div id="lista-notificaciones">
+                        <p><i class="fi fi-rr-exclamation"></i> Nuevo incidente reportado.</p>
+                        <p><i class="fi fi-rr-check-circle"></i> Caso resuelto.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VISTA: PERFIL -->
+            <section class="vista oculto" id="vista-perfil">
+                <div class="formulario">
+                    <h2><i class="fi fi-rr-user"></i> Mi perfil</h2>
+                    <p><strong>Nombre:</strong> <span id="perfil-nombre">Sin registrar</span></p>
+                    <p><strong>Cédula:</strong> <span id="perfil-cedula">Sin registrar</span></p>
+                    <p><strong>Correo:</strong> <span id="perfil-correo">Sin registrar</span></p>
+                    <button onclick="cerrarSesion()"><i class="fi fi-rr-sign-out"></i> Cerrar sesión</button>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet-control-geocoder@2.4.0/dist/Control.Geocoder.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
