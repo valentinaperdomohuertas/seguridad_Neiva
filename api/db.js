@@ -1,13 +1,12 @@
-// Configuración de la conexión a la base de datos MySQL (seguridad_neiva)
-// Ajusta usuario y contraseña según tu instalación local de MySQL.
 const mysql = require("mysql2/promise");
+require("dotenv").config();
 
 const pool = mysql.createPool({
-  host: "localhost",
-  port: 3306,
-  user: "root",
-  password: "12345",
-  database: "seguridad_neiva",
+  host: process.env.DB_HOST || "localhost",
+  port: process.env.DB_PORT || 3306,
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "",
+  database: process.env.DB_NAME || "seguridad_neiva",
   waitForConnections: true,
   connectionLimit: 10,
 });
