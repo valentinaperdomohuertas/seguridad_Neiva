@@ -60,3 +60,32 @@ DB_HOST=, DB_USER=, DB_PASSWORD=, DB_NAME=, MONGO_URI=, JWT_SECRET=, PORT=3000
 
 ## Autor
 Valentina Perdomo Huertas
+## Documentación de endpoints (API REST, carpeta /api)
+
+La API corre en `http://localhost:4000` y responde en formato JSON.
+
+### Autenticación
+
+| Método | Endpoint | Body (JSON) | Respuesta esperada |
+|--------|----------|-------------|--------------------|
+| POST | `/api/auth/registro` | `nombre`, `correo`, `contrasena` | `201` con los datos del usuario creado |
+| POST | `/api/auth/login` | `correo`, `contrasena` | `200` con `token` (JWT) y datos del usuario |
+
+Validaciones: campos obligatorios, formato de correo válido, contraseña de mínimo 6 caracteres y correo no repetido (`409`).
+
+### Incidentes
+
+| Método | Endpoint | Body (JSON) | Respuesta esperada |
+|--------|----------|-------------|--------------------|
+| GET | `/api/incidentes` | no lleva | `200` con la lista de incidentes |
+| GET | `/api/incidentes/:id` | no lleva | `200` con el incidente, o `404` si no existe |
+| POST | `/api/incidentes` | `tipo`, `descripcion`, `ubicacion`, `idUsuario` | `201` con el id creado, o `400` si faltan datos |
+| PUT | `/api/incidentes/:id/estado` | `estado` | `200`, o `400` si el estado no es válido, o `404` |
+| DELETE | `/api/incidentes/:id` | no lleva | `200`, o `404` si no existe |
+
+Estados válidos: `PENDIENTE`, `EN_PROCESO`, `ATENDIDO`, `CERRADO`.
+
+En esta versión los endpoints de incidentes no exigen token, para que el frontend en React pueda consumirlos directamente. El login genera un token JWT que queda disponible para proteger las rutas.
+
+### Códigos de error
+`400` datos inválidos, `401` credenciales incorrectas, `404` recurso no encontrado, `409` correo ya registrado, `500` error interno del servidor.
